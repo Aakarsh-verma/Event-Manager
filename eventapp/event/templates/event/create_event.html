@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}New Event{% endblock title %}
+
+{% block content %}
+
+<style type="text/css">
+	.create-form {
+		width: 100%;
+		max-width: 100%;
+		padding: 15px;
+		margin: auto;
+	}
+
+	.submit-button {
+		max-width: 200px;
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-7 offset-lg-1">
+			<form class="create-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+				{% include 'snippets/form_errors.html' %}
+
+				<!-- Title -->
+				<div>
+					<label for="id_title">Title</label>
+					<p>{{form.title}}</p>
+				</div>
+
+				<!-- Category -->
+				<div>
+					<label for="id_category">Category</label>
+					<p>{{form.category}}</p>
+				</div>
+
+				<!-- Content -->
+				<div>
+					<label for="id_body">Content</label>
+					<p>{{form.body}}</p>
+				</div>
+
+				<!-- reg_to -->
+				<div class="form-check form-check-inline">
+					<div class="form-group">
+						<label for="id_reg_to">Registration to</label>
+						<input class="form-control" type="date" name="reg_to" id="id_reg_to">
+					</div>
+				</div>
+
+				<!-- event_date -->
+				<div class="form-check form-check-inline">
+					<div class="form-group">
+						<label for="id_event_date">Event Date</label>
+						<input class="form-control" type="date" name="event_date" id="id_event_date">
+					</div>
+				</div>
+
+				<!-- Fee -->
+				<div>
+					<label for="id_fee">Fee</label>
+					<p>{{form.fee}}</p>
+				</div>
+
+				<!-- Registration -->
+				<div>
+					<label for="id_reg_link">Registration link</label>
+					<p>{{form.reg_link}}</p>
+				</div>
+
+				<!-- Image -->
+				<div class="form-group"><br>
+					<label for="id_image">Image<span class="text-muted">(size: Less than 1MB)</span></label>
+					<input type="file" name="image" id="id_image" accept="image/*" required>
+				</div>
+
+
+				<!-- Submit btn -->
+				<button class="submit-button btn btn-lg text-white" style="background-color:#910fff;" type="submit">POST</button>
+				<a href="{% url 'eventslist' %}" type="button" class="btn btn-lg btn-danger">CANCEL</a>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+	var today = new Date().toISOString().split('T')[0];
+	document.getElementsByName("reg_to")[0].setAttribute('min', today);
+
+	var today = new Date().toISOString().split('T')[0];
+	document.getElementsByName("event_date")[0].setAttribute('min', today);
+</script>
+
+{% endblock content %}

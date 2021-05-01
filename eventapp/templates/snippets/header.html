@@ -1,0 +1,221 @@
+{% load static %}
+
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    #nav{
+        background: #4D189B;
+		background: -webkit-linear-gradient(top left, #4D189B, #C174E8);
+		background: -moz-linear-gradient(top left, #4D189B, #C174E8);
+		background: linear-gradient(to bottom right, #4D189B, #C174E8);
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+        }
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Montserrat, sans-serif;
+    }
+
+    .nav-bar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        height: 60px;
+
+
+    }
+
+    @media (min-width: 768px) {
+        html {
+            font-size: 16px;
+        }
+    }
+
+    .container {
+        max-width: 1100px;
+    }
+
+    .pricing-header {
+        max-width: 700px;
+    }
+
+    .card-deck .card {
+        min-width: 220px;
+    }
+
+    .title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .title .name p a {
+        font-weight: 600;
+        color: white;
+        padding-left: 20px;
+        font-size: 25px;
+    }
+
+    .logo img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .search-bar {
+        display: flex;
+        flex-direction: row;
+        max-width: 350px;
+        width: 100%;
+        margin-left: 30px;
+    }
+
+    .form-control:focus {
+        outline: none;
+    }
+
+    .search-bar input {
+        border: none;
+        border-radius: 25px;
+        width: 350px;
+        height: 30px;
+    }
+
+    .fa-search {
+        position: absolute;
+        padding-top: 8px;
+        padding-left: 20px;
+        color: white;
+        font-size: 18px;
+    }
+
+    .nav-item .name a {
+        font-weight: 500;
+        color: white;
+        padding-left: 20px;
+        font-size: 20px;
+    }
+
+    .nav-link {
+        color: white;
+    }
+
+    input {
+        padding-left: 10px;
+    }
+    
+    #nv:focus{
+       background-color:lightcyan;
+    }
+
+
+    @keyframes color-change {
+        0% {
+            color: red;
+        }
+
+        20% {
+            color: rgb(255, 127, 8);
+        }
+
+        40% {
+            color: rgb(243, 255, 82);
+        }
+
+        60% {
+            color: rgb(97, 255, 82);
+        }
+
+        80% {
+            color: rgb(82, 235, 255);
+        }
+
+        100% {
+            color: rgb(255, 82, 218);
+        }
+    }
+</style>
+<nav class="navbar navbar-expand-md fixed-top" id="nav">
+    <div class="title">
+        <div class="logo"><img src="{% static 'img/megaphone.png' %}"></img></div>
+        <div class="name">
+            <p style="margin-bottom: 0;">
+                <a href="{% url 'eventslist' %}" style="animation: color-change 1s infinite;">
+                    EventAdda
+                </a>
+            </p>
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <form class="form-inline my-2 my-lg-0" method=" GET" action=".">
+            <div class="search-bar">
+                <input class="form-control mr-sm-2" type="text" name="title" id="title"
+                    placeholder="Search title" aria-label="Search">
+            </div>
+        </form>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <div class="name">
+                    <a class="nav-link" href="{% url 'eventslist' %}">Events<span class="sr-only">(current)</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <div class="name">
+                    <a class="nav-link" href="{% url 'blogslist' %}">Blog<span class="sr-only">(current)</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <div class="name">
+                    <a class="nav-link" href="{% url 'committee:committee' %}">Committee<span class="sr-only">(current)</span></a>
+                </div>
+            </li>
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <div class="name">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Actions</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" id="nv" style="font-weight: 150; color: #9101FF;"
+                            href="{% url 'create-event' %}">Post Event</a>
+                        <a class="dropdown-item" id="nv" style="font-weight: 150; color: #9101FF;"
+                            href="{% url 'create-blog' %}">Post Blog</a>
+                    </div>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+
+        <nav class="my-2 my-md-0 mr-md-3">
+            {% if request.user.is_authenticated %}
+            <a class="p-2 text-white" href="{% url 'account' %}">Your Account</a>
+            <a class="btn btn-outline" style="background: white;" href="{% url 'logout' %}">logout</a>
+            {% else %}
+
+            <!--<a class="p-2 text-white" href="#">Register</a>-->
+            <a class="btn btn-outline" style="background: white;" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </div>
+</nav>

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Event Adda-Log in{% endblock title %}
+
+{% block content %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style type="text/css">
+  .form-control::placeholder{
+    color:#9101FF;
+  }
+  .form-control:focus{
+    border: #9101FF;
+  }
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
+
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
+
+  .form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .h3 {
+    text-align: center;
+  }
+
+
+  .main {
+    min-height: 100vh;
+    height: auto;
+    margin-top: 80px;
+  }
+</style>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<br><br>
+<form class="form-signin bg-white shadow-lg" method="post">{% csrf_token %}
+  <div class="d-flex flex-column pb-3">
+    <img class="img-fluid mx-auto d-block" src="{% static 'img/pce.png' %}" alt="logo" width="72" height="72">
+  </div>
+  <h1 class="h3 mb-3 font-weight-normal" style="color:#9101FF">Member's Login</h1>
+
+  <div class="form-group">
+	<input type="text" class="form-control" name="username" id="username" placeholder="Username">
+  </div>
+  <div class="form-group">
+	<input type="password" class="form-control" name="password" id="password" placeholder="Password">
+  </div>
+
+  {% include 'snippets/form_errors.html' %}
+  <!-- <div class="d-flex flex-column pb-3">
+    <div class="g-recaptcha" data-sitekey="6Lfm5MUZAAAAAOLrmIq2J-ITb_qvF8l_7PTZ79a6"></div>
+  </div> -->
+  <button class="btn btn-lg btn-block" type="submit" style="background:#9101FF;"><b style="color:aliceblue">Login</b></button>
+  <div class="d-flex flex-column mt-2">
+    <a class="m-auto" href="{% url 'password_reset' %}" style="color:#9101FF;">Forgot Password?</a>
+  </div>
+
+</form>
+
+{% endblock content %}

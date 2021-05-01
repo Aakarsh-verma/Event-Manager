@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style type="text/css">
+	@media (max-width: 768px) {
+		.right-column {
+			margin-left: 0px;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.right-column {
+			margin-left: 20px;
+		}
+	}
+
+	.event-post-container {
+		margin-bottom: 20px;
+		width: 100%;
+	}
+
+	.create-post-bar {
+		background-color: #fff;
+		margin-bottom: 20px;
+	}
+
+	.left-column {
+		padding: 0px;
+	}
+
+	.right-column {
+		padding: 0px;
+	}
+
+	.lead {
+		font-size: 17px;
+	}
+
+	/* .filter {
+		margin-left: 360px;
+		width: 200px;
+		height: 80px;
+		padding: 5px;
+	} */
+
+	#create {
+		animation: fadeInAnimation ease 8s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+	}
+
+	.flex-container {
+		display: flex;
+	}
+
+	div.sticky {
+		position: -webkit-sticky;
+		/* Safari */
+		position: sticky;
+		top: 60px;
+	}
+
+	/* #filters {
+		margin-left: auto;
+		margin-bottom: auto;
+		min-width: 200px;
+	} */
+</style>
+
+<div class="flex-container">
+	<!-- main content -->
+	<div class="container">
+		<div class="row">
+			<!--Top Filters-->
+			<div class="col">
+				<a style="color:black;" data-toggle="collapse" href="#collapse1">
+					<legend><i class="fa fa-filter"></i>Filters</legend>
+				</a>
+				<div class="panel-collapse collapse" id="collapse1">
+					<div class="flex form-group">
+						<form method="GET" class="form-inline">
+
+							<!-- event_date -->
+							<div class="form-group">
+								<input placeholder="Event Date" class="form-control" type="text" name="event_date" id="id_date" onfocus="(this.type='date')" onblur="(this.type='text')">
+							</div>
+
+							<!-- reg ends -->
+							<div class="form-group">
+								<!-- <label for="id_reg_to">Registration Ends</label> -->
+								<input class="form-control" type="text" name="reg_to" id="id_reg_to" placeholder="Register unitl" onfocus="(this.type='date')" onblur="(this.type='text')">
+							</div>
+							
+							<!--Category-->
+							<div class="form-group">
+								<select class="form-control" id="id_category" name="category">
+									<option value="">Category</option>
+									{% for category in categorys %}
+									<option value="{{category.name}}">{{category.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							
+							<!-- fees -->
+							<div class="form-group">
+								<select class="form-control" id="id_fee" name="fee">
+									<option value="">Fees</option>
+									{% for fee in fees %}
+									{% if fee == 0 %}
+									<option value="{{fee}}">Free</option>
+									{% else %}
+									<option value="{{fee}}">{{fee}}</option>
+									{% endif %}
+									{% endfor %}
+								</select>
+							</div>
+
+							<button class="btn text-white mx-2" style="background-color:#910fff;" type="submit">Apply</button>
+							<a class="btn btn-primary mx-1" href="{% url 'eventslist' %}">Reset</a>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- event posts-->
+			{% if events %}
+			{% for post in events %}
+			<div class="event-post-container">
+				{% include 'event/snippets/event_card.html' with event_post=post %}
+			</div>
+			{% endfor %}
+			{% else %}
+			<div class="event-post-container">
+				{% include 'event/snippets/event_card.html' with query=query %}
+			</div>
+			{% endif %}
+			<!-- End event posts-->
+			<!-- Pagination -->
+			{% include 'event/snippets/event_post_pagination.html' with events=events %}
+
+			<!-- end event feed -->
+		</div>
+	</div>
+</div>
+
+
+{% endblock content %}
